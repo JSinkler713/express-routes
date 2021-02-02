@@ -1,0 +1,25 @@
+{
+  "name": "express-get-post",
+  "version": "1.0.0",
+  "description": "Code-along get and post routes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JSinkler713/express-get-post.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JSinkler713/express-get-post/issues"
+  },
+  "homepage": "https://github.com/JSinkler713/express-get-post#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0"
+  }
+}
