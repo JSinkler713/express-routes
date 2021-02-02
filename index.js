@@ -23,7 +23,22 @@ app.get('/dinosaurs', (req, res)=> {
     let dinos = fs.readFileSync('./dinosaurs.json')
     // take our data and put it in a more readable format
     dinos = JSON.parse(dinos)
-    console.log(dinos)
+    console.log(req.query.nameFilter)
+    let nameToFilterBy = req.query.nameFilter
+    // array method filter
+    console.log(nameToFilterBy)
+    
+    // if there is no submit of the form
+    // this will be undefined, and we will returnb all dinos
+    if (nameToFilterBy) {
+        const newFilteredArray = dinos.filter((dinosaurObj) => {
+            if (dinosaurObj.name.toLowerCase() === nameToFilterBy.toLowerCase()) {
+                return true
+            }
+        })
+        dinos = newFilteredArray
+    }
+    // console.log(dinos)
     // in our views folder render this page
     res.render('dinosaurs/index', {dinos: dinos} )
 })
@@ -61,12 +76,12 @@ app.post('/dinosaurs', (req, res)=> {
     dinos.push(newDino)
     fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinos))
 
+    let lastIndex  = dinos.length -1
     // get a request to /dinosaurs
-    res.redirect('/dinosaurs')
+    res.redirect(`/dinosaurs/${lastIndex}`)
     // this is coming from our form submit
     // we are going to look at the req.body
     // console.log(req.body)
-
 })
 
 
