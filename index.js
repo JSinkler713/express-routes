@@ -49,7 +49,19 @@ app.get('/dinosaurs', (req, res)=> {
 // Most specific to least specific url path
 app.get('/dinosaurs/new', (req, res)=> {
     res.render('dinosaurs/new')
-  })
+})
+
+// going to the edit page 😎
+app.get('/dinosaurs/edit/:idx', (req, res) => {
+    const dinosaurs = fs.readFileSync('./dinosaurs.json');
+    const dinosaursArray = JSON.parse(dinosaurs); 
+
+    let idx = Number(req.params.idx);
+    const ourDino = dinosaursArray[idx]; // what datatype is this? (object)
+
+    res.render('dinosaurs/edit', { dino: ourDino, idx });
+
+})
 
 // SHOW View
 app.get('/dinosaurs/:index', (req, res)=> {
@@ -61,8 +73,6 @@ app.get('/dinosaurs/:index', (req, res)=> {
     const dino = dinos[req.params.index]
     res.render('dinosaurs/show', { dino })
 })
-
-
 
 // POST route, doesn't have a view
 app.post('/dinosaurs', (req, res)=> {
@@ -86,6 +96,7 @@ app.post('/dinosaurs', (req, res)=> {
     // console.log(req.body)
 })
 
+// delete route
 app.delete('/dinosaurs/:idx', (req, res) => {
     const dinosaurs = fs.readFileSync('./dinosaurs.json');
     const dinosaursArray = JSON.parse(dinosaurs);
@@ -96,6 +107,22 @@ app.delete('/dinosaurs/:idx', (req, res) => {
     // save the dinosaurs array into the dinosaurs.json file
     fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinosaursArray));
     // redirect back to /dinosaurs route
+    res.redirect('/dinosaurs');
+});
+
+app.put('/dinosaurs/:idx', (req, res) => {
+    // the goal of this route is to udate a dinosaur 
+    const dinosaurs = fs.readFileSync('./dinosaurs.json');
+    const dinosaursArray = JSON.parse(dinosaurs);
+    // set up the index
+    let idx = Number(req.params.idx);
+    const ourDino = dinosaursArray[idx]; // what datatype is this? object
+    // update the dino
+    ourDino.name = req.body.name;
+    ourDino.type = req.body.type;
+    // rewrite file dinosaurs.json
+    fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinosaursArray));
+    // redirect them back to another page (/dinosaurs)
     res.redirect('/dinosaurs');
 });
 

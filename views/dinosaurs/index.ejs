@@ -13,6 +13,7 @@
         <form method="POST" action="/dinosaurs/<%= idx %>?_method=DELETE">
             <input type="submit" value='Delete'>
         </form>
+        <a href="/dinosaurs/edit/<%= idx %>">Update</a>
     <% } %>
 
     <%= dinos[0].name %>
