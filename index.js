@@ -5,14 +5,14 @@ const fs = require('fs')
 const methodOverride = require('method-override');
 
 
+// for views use .ejs files
+app.set('view engine', 'ejs')
+
 // MiddleWare
 // this will help us use our layout file
 app.use(expressLayouts)
 app.use(express.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
-
-// for views use .ejs files
-app.set('view engine', 'ejs')
 
 // ROUTES
 app.get('/', (req, res)=> {
@@ -21,7 +21,7 @@ app.get('/', (req, res)=> {
 
 // Index View
 // this url: localhost:8000/dinosaurs
-app.get('/dinosaurs', (req, res)=> {
+app.get('/dinosaurs', (req, res) => {
     let dinos = fs.readFileSync('./dinosaurs.json')
     // take our data and put it in a more readable format
     dinos = JSON.parse(dinos)
